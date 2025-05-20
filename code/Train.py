@@ -25,9 +25,7 @@ def train_model(model, region_input, target, val_region_input, val_target,
                 device='cpu', num_epochs=2000, lr=1e-3, weight_decay=1e-4,
                 patience=200, mc_samples=100, save_path="best_model.pt",
                 batch_size=32):
-    """
-    使用 mini-batch 优化的训练函数（区域图像输入）
-    """
+    
     from Validation import evaluate_model
 
     model.to(device)
@@ -39,7 +37,6 @@ def train_model(model, region_input, target, val_region_input, val_target,
 
     tag = 0.995
 
-    # 构建训练数据加载器
     train_dataset = TensorDataset(region_input, target)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
@@ -66,13 +63,11 @@ def train_model(model, region_input, target, val_region_input, val_target,
 
         epoch_loss /= len(train_dataset)
 
-        # 验证阶段（MC Dropout）
         val_mse, val_mae, _ = evaluate_model(model, val_region_input, val_target, mc_samples)
 
         if (epoch + 1) % 100 == 0:
             print(f"[Epoch {epoch + 1:03d}] Train Loss: {epoch_loss:.4f} | Val MSE: {val_mse:.4f}, MAE: {val_mae:.4f}")
 
-        # EarlyStopping 判断
         if val_mse < best_val_loss * tag:
             best_val_loss = val_mse
             patience_counter = 0
