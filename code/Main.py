@@ -27,15 +27,13 @@ def denormalize_output(Y_norm, Y_min, Y_max):
     return Y_norm * (Y_max - Y_min + 1e-8) + Y_min
 
 
-# 检查是否有可用的 GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
-# 加载数据（多个滑动窗口样本）
+# 加载数据
 train_inputs, train_targets = load_data(n=1, num_samples=50, seed=42)
-val_inputs, val_targets = load_data(n=1, num_samples=5, seed=24)
+val_inputs, val_targets = load_data(n=1, num_samples=1, seed=24)
 
-# 数据迁移到设备
 train_inputs = train_inputs.to(device)      # (50, 3, 320, 416)
 train_targets = train_targets.to(device)    # (50, 320, 416)
 val_inputs = val_inputs.to(device)
