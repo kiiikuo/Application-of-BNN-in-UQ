@@ -35,16 +35,7 @@ def find_oracle_MPIW(preds_mean, preds_var, true_values, target_PICP=0.95, max_i
 
 
 def visualize_PICP_MPIW(preds_mean, preds_var, true_values, alpha_range=(0.05, 0.3), step=0.05):
-    """
-    可视化不同 alpha 值对应的 PICP、MPIW 和 Oracle MPIW，使用双纵轴以适应不同指标尺度
-
-    参数:
-    - preds_mean: 预测均值，shape: (N, H, W)
-    - preds_var: 预测方差，shape: (N, H, W)
-    - true_values: 真实值，shape: (N, H, W)
-    - alpha_range: alpha 值范围 (如 0.05 到 0.3)
-    - step: alpha 增加的步长
-    """
+    
     alpha_values = np.arange(alpha_range[0], alpha_range[1] + step, step)
 
     picp_values = []
