@@ -4,14 +4,6 @@ import torch
 import random
 
 def load_data(n, num_samples=50, seed=42):
-    """
-    从指定数据文件中，随机选择多个滑动窗口作为训练样本。
-    每个窗口使用 m, m+1, m+2 作为输入，m+3 作为目标输出。
-
-    返回：
-        inputs: Tensor, shape (num_samples, 3, 320, 416)
-        targets: Tensor, shape (num_samples, 320, 416)
-    """
     random.seed(seed)
 
     file_path = f"E:\\TAIR Data\\Combined_TAIR_{n}.nc"
@@ -22,7 +14,7 @@ def load_data(n, num_samples=50, seed=42):
     if TAIR.shape != (200, 320, 416):
         TAIR = np.transpose(TAIR, (2, 1, 0))  # shape: (T, H, W)
 
-    max_start = 196  # 允许的最大起点索引（防止越界）
+    max_start = 196  
     start_indices = random.sample(range(max_start + 1), num_samples)
 
     input_list = []
